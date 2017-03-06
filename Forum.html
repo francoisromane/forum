@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset ="UTF-8">
+		<title> Forum </title>
+		<link rel = "stylesheet"
+		type = "text/css"
+		href = "Forum.css">
+		<script src="w3.js"> </script>
+	</head>
+
+	<body>
+	<div class="bloc1">
+	
+	<ul id="menu">
+			<li><a href="accueil.html" title="Accueil">Accueil</a></li>
+			<li><a class="active" href="Forum.html" title="Forum">Forum</a></li>
+	</ul>
+
+		<p> Accueil / Forum </p>	
+		<h1 class="titre"> Bienvenue sur le forum, vous êtes actuellement 359 membres connectés. </h1>
+	
+ 		 <button class="bouton" onclick="myfunctionRecherche()">Nouvelle conversation</button> 
+
+	<form id="recherche" method="post">
+		<input name="saisie" type="text" placeholder="Rechercher dans le forum">
+		<input class="loupe" type="submit" value="">
+	</form>
+
+	</div>
+	</body>
+</html>

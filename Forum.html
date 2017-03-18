@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset ="UTF-8">
+		<title> Forum </title>
+		<link rel = "stylesheet"
+		type = "text/css"
+		href = "Forum.css">
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>
+    <script>
+
+/*Retour haut de page*/
+$(document).ready(function() {
+     $('a[href=#top]').click(function(){
+          $('html, body').animate({scrollTop:0}, 'slow');
+          return false;
+     });
+});
+
+
+/*Pour afficher la nouvelle conversation*/
+$(document).ready(function(){
+
+    $("#add").click(function(){
+        var content = $("#entries").html();
+        $("#entries").append("<br>" + " " + $("#post0").val() + " - " + $("#post1").val() + " - " + $("#post2").val() + "</br>");
+        posts = localStorage.getItem("posts");
+
+        if (posts == null) {
+          var posts = [];
+          posts.push($("#post0").val());
+          posts.push($("#post1").val());
+          posts.push($("#post2").val());
+        }
+        else {
+          posts = JSON.parse(posts);
+          posts.push($("#post0").val());
+          posts.push($("#post1").val());
+          posts.push($("#post2").val());
+        }
+
+        localStorage.setItem("posts", JSON.stringify(posts));
+        console.log(localStorage);
+        affiche();
+        location.reload()
+    });
+});
+
+/*Pour afficher de manière fixe les questions du forum*/
+function affiche(){
+  var localStorage_post0=localStorage.getItem("posts");
+  var localStorage_post1=localStorage.getItem("posts");
+  var localStorage_post2=localStorage.getItem("posts");
+
+  var posts_JSON=JSON.parse(localStorage_post0);
+  var posts_JSON=JSON.parse(localStorage_post1);
+  var posts_JSON=JSON.parse(localStorage_post2);
+
+  for (var i in posts_JSON){
+    var id= i;
+    var post0=posts_JSON[i];
+    var post1=posts_JSON[i];
+    var post2=posts_JSON[i];
+
+    var toutpost = post0;
+  document.getElementById("entries").innerHTML+= toutpost;
+  }
+}
+
+/*--------Réponse----------*/
+$(document).ready(function(){
+
+    $("#add1").click(function(){
+        var content = $("#reponses").html();
+        $("#reponses").append("<br><li>" + " " + $("#rep").val() + "</li></br>");
+        posts = localStorage.getItem("posts");
+
+        if (posts == null) {
+          var posts = [];
+          posts.push($("#rep").val());
+        }
+        else {
+          posts = JSON.parse(posts);
+          posts.push($("#rep").val());
+        }
+
+        localStorage.setItem("posts", JSON.stringify(posts));
+        console.log(localStorage);
+        afficher();
+    });
+});
+
+
+function afficher(){
+  var localStorage_rep=localStorage.getItem("posts");
+
+  var posts_JSON=JSON.parse(localStorage_post0);
+  var posts_JSON=JSON.parse(localStorage_post1);
+  var posts_JSON=JSON.parse(localStorage_post2);
+
+  for (var i in posts_JSON){
+    var id= i;
+    var rep=posts_JSON[i];
+
+    if (rep==null){
+    var toutrep = rep + ". ";
+  }
+  else {
+    var toutrep = rep + ". ";
+  }
+  document.getElementById("reponses").innerHTML+= toutrep;
+  }
+}
+
+
+
+/*Pour dérouler et re fermer la zone Nouvelle Conversation en cliquant sur le bouton*/
+$(document).ready(function(){
+ $("#conv").hide(function(){
+  $("#new").click(function(){
+    $('#conv').slideToggle();
+        $('#new').html('Nouvelle conversation');
+  });
+})
+})
+
+
+/*Pour dérouker et re fermer la zone Réponse en cliquant sur le bouton*/
+$(document).ready(function(){
+ $("#rep").hide(function(){
+  $("#rep1").click(function(){
+    $('#rep').slideToggle();
+        $('#rep1').html('Afficher la zone réponse');
+  });
+})
+})
+
+/*Afin de voir la question et tous ses réponses possibles, il faut cliquer sur le bouton "Voir la nouvelle conversation et ses réponses", on peut ensuite renvoyer une réponse autant de fois qu'on le souhaite, et en recliquant sur ce même bouton on verra cette dernière.*/
+$('#refresh').on('click', function() {
+    location.reload();
+});
+
+</script>
+
+	</head>
+
+	<body onload="affiche()" onload="afficher()">
+  <a name="top"></a>
+	<div class="bloc1">
+	
+    <div class="menu">
+      <ul id="menu">
+        <li><a href="accueil.html" title="Accueil">Accueil</a></li>
+        <li><a class="active" href="Forum.html" title="Forum">Forum</a></li>
+      </ul>
+    </div>
+
+  <p> Accueil / Forum </p>	
+	<h1 class="titre"> Bienvenue sur le forum, vous êtes actuellement 359 membres connectés. </h1>
+		
+	<button id="new">Nouvelle conversation</button>
+
+	<form id="recherche" method="post">
+		<input name="saisie" type="text" placeholder="Rechercher dans le forum">
+		<input class="loupe" type="submit" value="">
+	</form>
+
+  <form>
+    <div id="conv">
+    <h1 class="titre"> Créer une nouvelle conversation </h1>
+
+
+	<fieldset>
+    <p>
+      <legend> Sujet</legend><br />
+        <select name="sujet" id="post0" style="width: 700px; height: 30px;">
+          <option value="<br>Thème : Idées Entrées ">Idées Entrées</option>
+          <option value="<br>Thème : Idées Plats ">Idées Plats</option>
+          <option value="<br>Thème : Idées Desserts ">Idées Desserts</option>
+          <option value="<br>Thème : Les ustensiles ">Les ustensiles</option>
+          <option value="<br>Thème : Les techniques ">Les techniques</option>
+          <option value="<br>Thème : Les bons plans ">Les bons plans</option>
+          <option value="<br>Thème : Les évenements ">Les évenements</option>
+          <option value="<br>Thème : Discussion Divers ">Discussion Divers</option>
+        </select>
+    </p>
+
+    <p>
+      <legend> Objet de la discussion </legend></br>
+        <input type= "text" style="width: 700px; height: 30px;" value= " - Objet : " id= "post1" placeholder = "Titre de votre sujet"> <br>
+    </p>
+
+    <p>
+      <legend> Votre question </legend></br>
+        <input type="text" name="nom" value=" - Question : " id="post2" rows=4 cols=40 style="width: 700px; height: 200px;"><br>
+    </p>
+
+  <button href="javascript:void(0)" id="add">Envoyer</button>
+
+  </fieldset>
+	</form>
+	</div>
+
+	<div class="mesposts">
+    	<span id="blog">
+        Les conversations
+        <ul id="entries"></ul>
+    	</span>
+  </div>
+  <div class="mesreps">
+      <span id="blog">
+      Les Réponses
+        <ul id="reponses"></ul>
+      </span>
+  </div>
+
+<button id="rep1">Afficher la zone réponse</button>
+  
+  <div class="rep">
+    <h1 class="titre"> Votre réponse </h1>
+      <fieldset>
+        <p>
+          <legend> Taper votre réponse : </legend></br>
+            <input name="nom" value=" => Réponse : " id="rep" rows=4 cols=40 style="width: 750px; height: 60px;" placeholder="Entrer votre réponse ici !"><br>
+        </p>
+
+  <div class="addrep">
+    <button href="javascript:void(0)" id="add1" style="text-decoration:none;">Envoyer la réponse </button>
+  </div>
+      </fieldset>
+  </div>
+
+
+  <div class="voirconv">
+  <p> Veuillez cliquer sur le bouton suivant pour voir la question et ses réponses ! </p>
+  <a href="javascript:window.location.reload()" style="text-decoration:none; color: gray;">Voir la nouvelle conversation et ses réponses</a>
+  </div>
+  
+
+	<footer id="pied">
+		<div class="copyright">
+			 Copyright © 2017 - Tous droits réservés. Réalisé par <a style="color: #D2A0E0;" target="_blank">Romane FRANCOIS</a> 
+		</div>
+	</footer>
+
+  <div class="haut">
+  <a href="#top" style="text-decoration:none; color:#E1A2D4;">En Haut</a>
+  </div>
+
+
+  </div>
+	</body>
+</html>
+
